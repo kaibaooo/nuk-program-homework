@@ -1,7 +1,7 @@
 /*
-//PlayerA WASD ¥ª¤W¤è
-//PlayerB IJKL ¥k¤U¤è
-//¤¤¶¡ªº¹D¨ã(#)¥i¥H§â¹ï¤âÅÜ¤p ¸I¨ì¹ï¤â®É¥i¥H£©±¼¥L Åı¥L¦^­ìÂI
+//PlayerA WASD å·¦ä¸Šæ–¹
+//PlayerB IJKL å³ä¸‹æ–¹
+//ä¸­é–“çš„é“å…·(#)å¯ä»¥æŠŠå°æ‰‹è®Šå° ç¢°åˆ°å°æ‰‹æ™‚å¯ä»¥ã„˜æ‰ä»– è®“ä»–å›åŸé»
 */
 
 #include<stdio.h>
@@ -65,7 +65,7 @@ int ori_map[15][15] = {
     { 0,1,1,1,1,1,1,1,1,1,1,1,1,1,0 },
     { 0,0,0,0,0,0,0,0,0,0,0,0,0,3,0 }
 };
-//A,Bª±®a²¾°Ê¤è¦V
+//A,Bç©å®¶ç§»å‹•æ–¹å‘
 int dirPlayerA_X = 0;
 int dirPlayerA_Y = 0;
 int dirPlayerB_X = 0;
@@ -99,14 +99,14 @@ int main() {
     srand((unsigned)time(NULL));
     system("color 0B");
     generateFood();
-    printMap(); //¦L¦a¹Ï
+    printMap(); //å°åœ°åœ–
     while (1) {
-        //printMap(); //¦L¦a¹Ï
+        //printMap(); //å°åœ°åœ–
         if (_kbhit()) {
             system("cls");
-            control(); //ª±®a«öÁä½L
-            processA(); //²¾°Ê°}¦C¤¤ª±®aAªº¦ì¸m
-            processB(); //²¾°Ê°}¦C¤¤ª±®aBªº¦ì¸m
+            control(); //ç©å®¶æŒ‰éµç›¤
+            processA(); //ç§»å‹•é™£åˆ—ä¸­ç©å®¶Açš„ä½ç½®
+            processB(); //ç§»å‹•é™£åˆ—ä¸­ç©å®¶Bçš„ä½ç½®
             printMap();
         }
         if (isPlayerAGhost && (stepA - oriStepA > 20)){
@@ -119,7 +119,7 @@ int main() {
         if (GameOver()) {
             system("cls");
             overDisplay();
-            printf("1. ¦A¨Ó°Ú\n2. ©ñ§Ú¨«\n");
+            printf("1. å†ä¾†å•Š\n2. æ”¾æˆ‘èµ°\n");
             scanf("%d", &c);
             if (c == 1) {
                 resetStatus();
@@ -143,21 +143,21 @@ void printMap() {
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 15; j++) {
             if (map[i][j] == 0)
-                printf("¢i");
+                printf("â–ˆ");
             else if (map[i][j] == 1)
-                printf("¡@");
+                printf("ã€€");
             else if (map[i][j] == 2 && !isPlayerAGhost) //PlayerA
-                printf("¢æ");
+                printf("ï¼¸");
             else if (map[i][j] == 2 && isPlayerAGhost) //PlayerA
                 printf("x ");
             else if (map[i][j] == 3 && !isPlayerBGhost) //PlayerB
-                printf("¢İ");
+                printf("ï¼¯");
             else if (map[i][j] == 3 && isPlayerBGhost) //PlayerB
                 printf("o ");
             else if (map[i][j] == 4)
-                printf("¡¯");
+                printf("ï¼Š");
             else if (map[i][j] == 5)
-                printf("¡­");
+                printf("ï¼ƒ");
         }
         printf("\n");
     }
@@ -172,42 +172,42 @@ void printMap() {
 void control() {
      switch (_getche()) {
         case UP:
-            system("cls"); //²MªÅ
+            system("cls"); //æ¸…ç©º
             dirPlayerA_Y = -1;
             dirPlayerA_X = 0;
             break;
         case DOWN:
-            system("cls"); //²MªÅ
+            system("cls"); //æ¸…ç©º
             dirPlayerA_Y = 1;
             dirPlayerA_X = 0;
             break;
         case LEFT:
-            system("cls"); //²MªÅ
+            system("cls"); //æ¸…ç©º
             dirPlayerA_Y = 0;
             dirPlayerA_X = -1;
             break;
         case RIGHT:
-            system("cls"); //²MªÅ
+            system("cls"); //æ¸…ç©º
             dirPlayerA_Y = 0;
             dirPlayerA_X = 1;
             break;
         case UP_:
-            system("cls"); //²MªÅ
+            system("cls"); //æ¸…ç©º
             dirPlayerB_Y = -1;
             dirPlayerB_X = 0;
             break;
         case DOWN_:
-            system("cls"); //²MªÅ
+            system("cls"); //æ¸…ç©º
             dirPlayerB_Y = 1;
             dirPlayerB_X = 0;
             break;
         case LEFT_:
-            system("cls"); //²MªÅ
+            system("cls"); //æ¸…ç©º
             dirPlayerB_Y = 0;
             dirPlayerB_X = -1;
             break;
         case RIGHT_:
-            system("cls"); //²MªÅ
+            system("cls"); //æ¸…ç©º
             dirPlayerB_Y = 0;
             dirPlayerB_X = 1;
             break;
@@ -218,14 +218,14 @@ void processA() {
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 15; j++) {
             if (map[i][j] == 2) {
-                //¶W¥X°}¦C½d³ò³B²z
+                //è¶…å‡ºé™£åˆ—ç¯„åœè™•ç†
                 if ((i + dirPlayerA_Y < 0) && (i + dirPlayerA_Y) >= 15) {
                     continue;
                 }
                 if ((i + dirPlayerA_X < 0) && (i + dirPlayerA_X) >= 15) {
                     continue;
                 }
-                //¤U¤@¨B¬O¸ô
+                //ä¸‹ä¸€æ­¥æ˜¯è·¯
                 if (map[i + dirPlayerA_Y][j + dirPlayerA_X] == 1 && (dirPlayerA_X || dirPlayerA_Y)) {
                     map[i + dirPlayerA_Y][j + dirPlayerA_X] = 2;
                     map[i][j] = 1;
@@ -234,7 +234,7 @@ void processA() {
                     stepA++;
                     return;
                 }
-                //¤U¤@¨B¬O­¹ª«
+                //ä¸‹ä¸€æ­¥æ˜¯é£Ÿç‰©
                 else if (map[i + dirPlayerA_Y][j + dirPlayerA_X] == 4 && (dirPlayerA_X || dirPlayerA_Y)) {
                     map[i + dirPlayerA_Y][j + dirPlayerA_X] = 2;
                     map[i][j] = 1;
@@ -244,7 +244,7 @@ void processA() {
                     stepA++;
                     return;
                 }
-                //¤U¤@¨B¬O¹D¨ã
+                //ä¸‹ä¸€æ­¥æ˜¯é“å…·
                 else if (map[i + dirPlayerA_Y][j + dirPlayerA_X] == 5 && (dirPlayerA_X || dirPlayerA_Y)) {
                     map[i + dirPlayerA_Y][j + dirPlayerA_X] = 2;
                     map[i][j] = 1;
@@ -255,13 +255,13 @@ void processA() {
                     stepA++;
                     return;
                 }
-                //¤U¤@¨B¬O¹ï¤â¥B¹ï¤â¬O°­
+                //ä¸‹ä¸€æ­¥æ˜¯å°æ‰‹ä¸”å°æ‰‹æ˜¯é¬¼
                 else if (isPlayerBGhost && map[i + dirPlayerA_Y][j + dirPlayerA_X] == 3) {
                     map[14][13] = 3;
                     map[i + dirPlayerA_Y][j + dirPlayerA_X] = 2;
                     map[i][j] = 1;
                     stepA++;
-                    //ÅÜ¦^­ì¥»ªº
+                    //è®Šå›åŸæœ¬çš„
                     isPlayerBGhost = 0;
                     dirPlayerA_X = 0;
                     dirPlayerA_Y = 0;
@@ -280,7 +280,7 @@ void processB() {
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 15; j++) {
             if (map[i][j] == 3) {
-                //¶W¥X°}¦C½d³ò³B²z
+                //è¶…å‡ºé™£åˆ—ç¯„åœè™•ç†
                 if ((i + dirPlayerB_Y < 0) && (i + dirPlayerB_Y) >= 15) {
                     continue;
                 }
@@ -296,7 +296,7 @@ void processB() {
                     stepB++;
                     return;
                 }
-                //¤U¤@¨B­¹ª«
+                //ä¸‹ä¸€æ­¥é£Ÿç‰©
                 else if (map[i + dirPlayerB_Y][j + dirPlayerB_X] == 4 && (dirPlayerB_X || dirPlayerB_Y)) {
                     map[i + dirPlayerB_Y][j + dirPlayerB_X] = 3;
                     map[i][j] = 1;
@@ -306,7 +306,7 @@ void processB() {
                     stepB++;
                     return;
                 }
-                //¤U¤@¨B¬O¹D¨ã
+                //ä¸‹ä¸€æ­¥æ˜¯é“å…·
                 else if (map[i + dirPlayerB_Y][j + dirPlayerB_X] == 5 && (dirPlayerB_X || dirPlayerB_Y)) {
                     map[i + dirPlayerB_Y][j + dirPlayerB_X] = 3;
                     map[i][j] = 1;
@@ -317,12 +317,12 @@ void processB() {
                     stepB++;
                     return;
                 }
-                //¤U¤@¨B¬O¹ï¤â¥B¬O°­
+                //ä¸‹ä¸€æ­¥æ˜¯å°æ‰‹ä¸”æ˜¯é¬¼
                 else if (isPlayerAGhost && map[i + dirPlayerB_Y][j + dirPlayerB_X] == 2) {
                     map[0][1] = 2;
                     map[i + dirPlayerB_Y][j + dirPlayerB_X] = 3;
                     map[i][j] = 1;
-                    //ÅÜ¦^­ì¥»ªº
+                    //è®Šå›åŸæœ¬çš„
                     isPlayerAGhost = 0;
                     dirPlayerB_X = 0;
                     dirPlayerB_Y = 0;
@@ -347,13 +347,13 @@ void generateFood() {
     }
     int route_length = route.size();
     //printf("%d\n", route_length);
-    //²£¥ÍÀH¾÷¦aÂI­¹ª«
-    //¥ı¶]§¹¾ã­Ómap±N¦³¸ôªº®y¼Ğ°O¿ı¦bvector¸Ì­±
-    //ÀH¾÷²£¥Í¤@­Ó¼Æ¦r¤p©óµ¥©óvector¤j¤p
-    //¨ú±ovector¤¤ÀH¾÷ªºÂI
+    //ç”¢ç”Ÿéš¨æ©Ÿåœ°é»é£Ÿç‰©
+    //å…ˆè·‘å®Œæ•´å€‹mapå°‡æœ‰è·¯çš„åº§æ¨™è¨˜éŒ„åœ¨vectorè£¡é¢
+    //éš¨æ©Ÿç”¢ç”Ÿä¸€å€‹æ•¸å­—å°æ–¼ç­‰æ–¼vectorå¤§å°
+    //å–å¾—vectorä¸­éš¨æ©Ÿçš„é»
     for(int idx = 0;idx<numberOfFood;idx++) {
         while (1) {
-            //¨¾¤î¨â­Ó­¹ª«¥X²{¦b¦P¤@ÂI
+            //é˜²æ­¢å…©å€‹é£Ÿç‰©å‡ºç¾åœ¨åŒä¸€é»
             int foodLoc = rand() % route_length;
             int foodY = route.at(foodLoc) / 100;
             int foodX = route.at(foodLoc) % 100;
@@ -370,21 +370,21 @@ void overDisplay() {
     for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 15; j++) {
             if (map[i][j] == 0)
-                printf("¢i");
+                printf("â–ˆ");
             else if (map[i][j] == 1)
-                printf("¡@");
+                printf("ã€€");
             else if (map[i][j] == 2 && !isPlayerAGhost) //PlayerA
-                printf("¢æ");
+                printf("ï¼¸");
             else if (map[i][j] == 2 && isPlayerAGhost) //PlayerA
                 printf("x ");
             else if (map[i][j] == 3 && !isPlayerBGhost) //PlayerB
-                printf("¢İ");
+                printf("ï¼¯");
             else if (map[i][j] == 3 && isPlayerBGhost) //PlayerB
                 printf("o ");
             else if (map[i][j] == 4)
-                printf("¡¯");
+                printf("ï¼Š");
             else if (map[i][j] == 5)
-                printf("¡­");
+                printf("ï¼ƒ");
         }
         printf("\n");
     }
@@ -401,11 +401,11 @@ void overDisplay() {
 
 void saveGameStatus() {
     list tmp;
-    printf("½Ğ¿é¤J§Aªº¦W¦r:");
+    printf("è«‹è¼¸å…¥ä½ çš„åå­—:");
     scanf("%s", tmp.nme);
     ScoreA > ScoreB ? tmp.highScore = ScoreA : tmp.highScore = ScoreB;
     fprintf(history, "%s %d\n", tmp.nme, tmp.highScore);
-    printf("%s %d ¤w°O¿ı\n", tmp.nme, tmp.highScore);
+    printf("%s %d å·²è¨˜éŒ„\n", tmp.nme, tmp.highScore);
     fclose(history);
 }
 
@@ -421,7 +421,7 @@ void resetStatus() {
     dirPlayerB_Y = 0;
     ScoreA = 0;
     ScoreB = 0;
-    //vector²MªÅ¥i¦³¥iµL ¦]¬°¦a¹Ï©T©w
+    //vectoræ¸…ç©ºå¯æœ‰å¯ç„¡ å› ç‚ºåœ°åœ–å›ºå®š
     route.clear();
     isPlayerAGhost = 0;
     isPlayerBGhost = 0;
